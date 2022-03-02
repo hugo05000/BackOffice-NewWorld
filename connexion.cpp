@@ -1,6 +1,7 @@
 #include "connexion.h"
 #include "ui_connexion.h"
 #include <QSqlQuery>
+#include <QDebug>
 
 
 Connexion::Connexion(QWidget *parent) :
@@ -15,13 +16,27 @@ Connexion::~Connexion()
     delete ui;
 }
 
-void Connexion::verifIdentifiant() {
+void Connexion::on_pushButton_connexion_clicked()
+{
     QSqlQuery verification("SELECT COUNT(loginEmploye) "
                            "FROM Employe "
-                           "WHERE loginEmploye='"+ui -> lineEdit_login -> text()+"' AND mdp=PASSWORD('"+ui -> lineEdit_mdp -> text()+"')");
+                           "WHERE loginEmploye='"+ui -> lineEdit_login -> text()+"' AND mdp=SHA2('"+ui -> lineEdit_mdp -> text()+"',256)");
 
     verification.first();
-    QString resultat = verification.value(0).toString();
+    int resultat = verification.value(0).toInt();
 
+    if(resultat>0)
+    {
+        accept();
+    }
+}
 
+int Connexion::getIdUtilisateur()
+{
+    QSqlQuery idUtilisateurRequest("SELECT numEmploye FROM Employe WHERE loginEmploye='"+ui->lineEdit_login->text()+"'");
+    idUtilisateurRequest.first();
+
+    int idEmploye = idUtilisateurRequest.value("numEmploye").toInt();
+
+    return idEmploye;
 }

@@ -28,16 +28,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     connexion.cpp \
-    connexion.cpp
+    produits.cpp
 
 HEADERS += \
         mainwindow.h \
-    connexion.h \
     connexion.h
 
 FORMS += \
         mainwindow.ui \
-    connexion.ui \
     connexion.ui
 
 # Default rules for deployment.

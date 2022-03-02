@@ -14,10 +14,14 @@ class Connexion : public QDialog
 public:
     explicit Connexion(QWidget *parent = nullptr);
     ~Connexion();
+    int getIdUtilisateur();
+
+private slots:
+    void on_pushButton_connexion_clicked();
 
 private:
     Ui::Connexion *ui;
-    void verifIdentifiant();
+
 };
 
 #endif // CONNEXION_H

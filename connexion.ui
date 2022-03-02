@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>419</width>
-    <height>138</height>
+    <height>153</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Connexion - Patatestore</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -70,6 +70,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Login</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLineEdit" name="lineEdit_login"/>
      </item>
      <item>
@@ -84,6 +91,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Mot de passe</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLineEdit" name="lineEdit_mdp"/>
@@ -127,43 +141,6 @@
      </item>
      <item>
       <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <spacer name="horizontalSpacer_5">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Patatestore - Backoffice</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_6">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

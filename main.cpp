@@ -10,14 +10,14 @@ int main(int argc, char *argv[])
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
     db.setDatabaseName("Patatestore");
-    db.setUserName("userHugo");
-    db.setPassword("elini01");
+    db.setUserName("root");
+    db.setPassword("eVHNM2001");
     db.open();
 
     Connexion seConnecter;
     if(seConnecter.exec()==QDialog::Accepted)
     {
-        MainWindow w;
+        MainWindow w(seConnecter.getIdUtilisateur());
         w.show();
 
         return a.exec();
