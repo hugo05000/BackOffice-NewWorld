@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,20 +25,36 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    employe.cpp \
+    information.cpp \
+    abonnement.cpp \
+    producteur.cpp \
+    rayon.cpp \
+    refusmotif.cpp \
+    tableaudebord.cpp \
+    variete.cpp \
+    confirmersuppression.cpp \
         main.cpp \
         mainwindow.cpp \
     connexion.cpp \
     produits.cpp
 
 HEADERS += \
+    confirmersuppression.h \
         mainwindow.h \
-    connexion.h
+    connexion.h \
+    refusmotif.h
 
 FORMS += \
+    confirmersuppression.ui \
         mainwindow.ui \
-    connexion.ui
+    connexion.ui \
+    refusmotif.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc

@@ -77,7 +77,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_login"/>
+      <widget class="QLineEdit" name="lineEdit_login">
+       <property name="text">
+        <string>ADMIN</string>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -100,7 +104,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_mdp"/>
+      <widget class="QLineEdit" name="lineEdit_mdp">
+       <property name="text">
+        <string>XITgfUibs1456</string>
+       </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_8">
@@ -153,6 +164,16 @@
       </spacer>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_motDePasseIncorrect">
+     <property name="styleSheet">
+      <string notr="true">color:red;</string>
+     </property>
+     <property name="text">
+      <string>Informations de connexions incorrectes.</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

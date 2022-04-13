@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file alias="ok">icons-ok.png</file>
+        <file alias="bin">icons-bin.png</file>
+        <file alias="modify">icons-modify.png</file>
+        <file alias="milk">icons-lait.png</file>
+        <file alias="person">icons-person.png</file>
+        <file alias="shop">icons-shop.png</file>
+        <file alias="panier">icons-panier.png</file>
+        <file alias="tracteur">icons-tracteur.png</file>
+        <file alias="card">icons-card.png</file>
+        <file alias="cross">icons-cross.png</file>
+        <file alias="graph">icons-histogramme.png</file>
+        <file alias="clock">icons-clock.png</file>
+        <file alias="security">icons-security.png</file>
+        <file alias="group">icons-group.png</file>
+    </qresource>
+</RCC>

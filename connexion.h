@@ -14,13 +14,14 @@ class Connexion : public QDialog
 public:
     explicit Connexion(QWidget *parent = nullptr);
     ~Connexion();
-    int getIdUtilisateur();
+    QString getIdUtilisateur();
 
 private slots:
     void on_pushButton_connexion_clicked();
 
 private:
     Ui::Connexion *ui;
+    int cptEchec=0;
 
 };
 

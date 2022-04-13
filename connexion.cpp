@@ -9,6 +9,7 @@ Connexion::Connexion(QWidget *parent) :
     ui(new Ui::Connexion)
 {
     ui->setupUi(this);
+    ui->label_motDePasseIncorrect->setVisible(0);
 }
 
 Connexion::~Connexion()
@@ -25,18 +26,24 @@ void Connexion::on_pushButton_connexion_clicked()
     verification.first();
     int resultat = verification.value(0).toInt();
 
-    if(resultat>0)
-    {
+    if(resultat>0){
         accept();
+    } else{
+        cptEchec++;
+        if(cptEchec==3)
+        {
+            close();
+        }
+        ui->label_motDePasseIncorrect->setVisible(1);
     }
 }
 
-int Connexion::getIdUtilisateur()
+QString Connexion::getIdUtilisateur()
 {
     QSqlQuery idUtilisateurRequest("SELECT numEmploye FROM Employe WHERE loginEmploye='"+ui->lineEdit_login->text()+"'");
     idUtilisateurRequest.first();
 
-    int idEmploye = idUtilisateurRequest.value("numEmploye").toInt();
+    QString idEmploye = idUtilisateurRequest.value("numEmploye").toString();
 
     return idEmploye;
 }

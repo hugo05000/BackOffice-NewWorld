@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
     db.setDatabaseName("Patatestore");
-    db.setUserName("root");
-    db.setPassword("eVHNM2001");
+    db.setUserName("hugo");
+    db.setPassword("elini01");
     db.open();
 
     Connexion seConnecter;
