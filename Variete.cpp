@@ -6,6 +6,8 @@
 
 void MainWindow::affichageVarietes()
 {
+    ui->pushButton_supprimerVariete->setDisabled(1);
+
     QStringList tableLabels;
     tableLabels << "Numéro" << "Nom" << "Rayon";
     ui->tableWidget_variete->clear();
@@ -52,20 +54,30 @@ void MainWindow::affichageVarietes()
     int cptActivation=0;
     while(varieteAttenteRequest.next())
     {
-        QSqlQuery nomRayonRequest("SELECT nomRayon FROM rayon WHERE numeroRayon="+varieteAttenteRequest.value("numeroRayon").toString());
-        nomRayonRequest.first();
+        //On vérifie si la variété n'a été refusée
+        QSqlQuery refusVarietetRequest("SELECT numRefusVariete FROM refusVariete WHERE numRefusVariete="+varieteAttenteRequest.value("numeroProduit").toString());
+        refusVarietetRequest.first();
 
-        ui->tableWidget_validationVariete->insertRow(cptActivation);
-        ui->tableWidget_validationVariete->setItem(cptActivation,0,new QTableWidgetItem(varieteAttenteRequest.value("numeroVariete").toString()));
-        ui->tableWidget_validationVariete->setItem(cptActivation,1,new QTableWidgetItem(varieteAttenteRequest.value("nomVariete").toString()));
-        ui->tableWidget_validationVariete->setItem(cptActivation,2,new QTableWidgetItem(nomRayonRequest.value("nomRayon").toString()));
-        ui->tableWidget_validationVariete->setColumnHidden(0,true);
-        cptActivation++;
+        //On affiche seulement la variété si elle n'est pas refusée
+        if(refusVarietetRequest.size() == 0)
+        {
+            QSqlQuery nomRayonRequest("SELECT nomRayon FROM rayon WHERE numeroRayon="+varieteAttenteRequest.value("numeroRayon").toString());
+            nomRayonRequest.first();
+
+            ui->tableWidget_validationVariete->insertRow(cptActivation);
+            ui->tableWidget_validationVariete->setItem(cptActivation,0,new QTableWidgetItem(varieteAttenteRequest.value("numeroVariete").toString()));
+            ui->tableWidget_validationVariete->setItem(cptActivation,1,new QTableWidgetItem(varieteAttenteRequest.value("nomVariete").toString()));
+            ui->tableWidget_validationVariete->setItem(cptActivation,2,new QTableWidgetItem(nomRayonRequest.value("nomRayon").toString()));
+            ui->tableWidget_validationVariete->setColumnHidden(0,true);
+            cptActivation++;
+        }
     }
 }
 
 void MainWindow::on_tableWidget_variete_cellClicked(int row, int column)
 {
+    ui->pushButton_supprimerVariete->setEnabled(1);
+
     ui->lineEdit_variete->setText(ui->tableWidget_variete->item(row,1)->text());
     ui->comboBox_rayon->setCurrentIndex(ui->comboBox_rayon->findData(ui->tableWidget_variete->item(row,2)->text().toInt()));
 }
@@ -74,8 +86,8 @@ void MainWindow::on_pushButton_ajouterVariete_clicked()
 {
     QSqlQuery ajouterVarieteRequest("INSERT INTO Variete VALUES("
                                     +getMaxVariete()+",'"
-                                    +ui->lineEdit_variete->text()+"',"
-                                    +ui->comboBox_variete->currentData().toString()+")");
+                                    +ui->lineEdit_variete->text().replace("'","\'").replace(";","")+"',"
+                                    +ui->comboBox_variete->currentData().toString()+",1,NOW())");
 
     if(ajouterVarieteRequest.numRowsAffected() > 0){
         affichageVarietes();
@@ -90,7 +102,7 @@ void MainWindow::on_pushButton_ajouterVariete_clicked()
 void MainWindow::on_pushButton_modifierVariete_clicked()
 {
     QSqlQuery modifierVarieteRequest("UPDATE Variete SET "
-                                     "nomVariete='"+ui->lineEdit_variete->text()+
+                                     "nomVariete='"+ui->lineEdit_variete->text().replace("'","\'").replace(";","")+
                                      "',numeroRayon=" +ui->comboBox_rayon->currentData().toString()+
                                      " WHERE numeroVariete="+ui->tableWidget_variete->item(ui->tableWidget_variete->currentRow(),0)->text());
 
@@ -110,7 +122,10 @@ void MainWindow::on_pushButton_supprimerVariete_clicked()
 
     if (laSuppression.exec()==QDialog::Accepted)
     {
-        QSqlQuery supprimerVarieteRequest("DELETE FROM Variete WHERE numeroVariete="+ui->tableWidget_variete->item(ui->tableWidget_variete->currentRow(),0)->text());
+        QSqlQuery supprimerProduitrequest("DELETE FROM produit "
+                                          "WHERE numeroVariete="+ui->tableWidget_variete->item(ui->tableWidget_variete->currentRow(),0)->text().replace("'","\'").replace(";",""));
+        QSqlQuery supprimerVarieteRequest("DELETE FROM Variete "
+                                          "WHERE numeroVariete="+ui->tableWidget_variete->item(ui->tableWidget_variete->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
         if(supprimerVarieteRequest.numRowsAffected() > 0) {
             affichageVarietes();
@@ -125,7 +140,8 @@ void MainWindow::on_pushButton_supprimerVariete_clicked()
 
 void MainWindow::on_pushButton_accepterVariete_clicked()
 {
-    QSqlQuery activationVarieteRequest("UPDATE Variete SET activationVariete=1,dateActivationVariete=NOW() WHERE numeroVariete="+ui->tableWidget_validationVariete->item(ui->tableWidget_validationVariete->currentRow(),0)->text());
+    QSqlQuery activationVarieteRequest("UPDATE Variete SET activationVariete=1,dateActivationVariete=NOW() "
+                                       "WHERE numeroVariete="+ui->tableWidget_validationVariete->item(ui->tableWidget_validationVariete->currentRow(),0)->text().replace("'","\'").replace(";",""));
     if(activationVarieteRequest.numRowsAffected() > 0) {
         affichageVarietes();
         affichageProduits();

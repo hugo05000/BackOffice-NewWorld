@@ -14,24 +14,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QString numUtilisateur, QWidget *parent = nullptr);
     ~MainWindow();
-    QString getMaxProduit();
-    QString getMaxVariete();
-    QString getMaxRayon();
-    QString getMaxProducteur();
-    QString getMaxAbonnement();
-    QString getMaxEmploye();
-    void affichageProduits();
-    void affichageVarietes();
-    void affichageRayon();
-    void affichageProducteur();
-    void affichageAbonnement();
-    void affichageInformations();
-    void affichageEmploye();
-    void afficheTableaudebord();
-    void nouveauxInscrits();
-    void nouvellesVarietes();
-    void ldpMisEnVente();
-    void varietesParRayons();
 
 private slots:
     void on_tableWidget_produits_cellClicked(int row, int column);
@@ -104,6 +86,23 @@ private:
     Ui::MainWindow *ui;
     QString numUser;
     int typeEmploye;
+    QString getMaxProduit();
+    QString getMaxVariete();
+    QString getMaxRayon();
+    QString getMaxAbonnement();
+    QString getMaxEmploye();
+    void affichageProduits();
+    void affichageVarietes();
+    void affichageRayon();
+    void affichageProducteur();
+    void affichageAbonnement();
+    void affichageInformations();
+    void affichageEmploye();
+    void afficheTableaudebord();
+    void nouveauxInscrits();
+    void nouvellesVarietes();
+    void ldpMisEnVente();
+    void varietesParRayons();
 
 };
 

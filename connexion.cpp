@@ -21,7 +21,7 @@ void Connexion::on_pushButton_connexion_clicked()
 {
     QSqlQuery verification("SELECT COUNT(loginEmploye) "
                            "FROM Employe "
-                           "WHERE loginEmploye='"+ui -> lineEdit_login -> text()+"' AND mdp=SHA2('"+ui -> lineEdit_mdp -> text()+"',256)");
+                           "WHERE loginEmploye='"+ui -> lineEdit_login -> text().replace("'","\'").replace(";","")+"' AND mdp=SHA2('"+ui -> lineEdit_mdp -> text().replace("'","\'").replace(";","")+"',256)");
 
     verification.first();
     int resultat = verification.value(0).toInt();
@@ -40,7 +40,7 @@ void Connexion::on_pushButton_connexion_clicked()
 
 QString Connexion::getIdUtilisateur()
 {
-    QSqlQuery idUtilisateurRequest("SELECT numEmploye FROM Employe WHERE loginEmploye='"+ui->lineEdit_login->text()+"'");
+    QSqlQuery idUtilisateurRequest("SELECT numEmploye FROM Employe WHERE loginEmploye='"+ui->lineEdit_login->text().replace("'","\'").replace(";","")+"'");
     idUtilisateurRequest.first();
 
     QString idEmploye = idUtilisateurRequest.value("numEmploye").toString();

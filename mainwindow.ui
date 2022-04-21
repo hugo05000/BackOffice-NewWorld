@@ -42,7 +42,7 @@
                <x>0</x>
                <y>0</y>
                <width>536</width>
-               <height>329</height>
+               <height>330</height>
               </rect>
              </property>
             </widget>
@@ -59,7 +59,7 @@
                <x>0</x>
                <y>0</y>
                <width>536</width>
-               <height>329</height>
+               <height>330</height>
               </rect>
              </property>
             </widget>
@@ -76,7 +76,7 @@
                <x>0</x>
                <y>0</y>
                <width>536</width>
-               <height>329</height>
+               <height>330</height>
               </rect>
              </property>
             </widget>
@@ -374,6 +374,10 @@
                 <property name="text">
                  <string>Décliner</string>
                 </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/new/prefix1/cross</normaloff>:/new/prefix1/cross</iconset>
+                </property>
                </widget>
               </item>
               <item row="0" column="2">
@@ -659,6 +663,10 @@
                <widget class="QPushButton" name="pushButton_declinerVariete">
                 <property name="text">
                  <string>Décliner</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/new/prefix1/cross</normaloff>:/new/prefix1/cross</iconset>
                 </property>
                </widget>
               </item>
@@ -1128,6 +1136,10 @@
                <widget class="QPushButton" name="pushButton_declinerProducteur">
                 <property name="text">
                  <string>Décliner</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/new/prefix1/cross</normaloff>:/new/prefix1/cross</iconset>
                 </property>
                </widget>
               </item>
@@ -1955,7 +1967,7 @@
      <x>0</x>
      <y>0</y>
      <width>1158</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">

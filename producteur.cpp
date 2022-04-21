@@ -5,6 +5,8 @@
 
 void MainWindow::affichageProducteur()
 {
+    ui->pushButton_supprimerProducteur->setDisabled(1);
+
     //On initialise le tableau
     QStringList tableLabels;
     tableLabels << "Numéro" << "Nom" << "Prénom" << "Login" << "Adresse" << "Ville" << "CP" << "Type abonnement";
@@ -71,6 +73,8 @@ void MainWindow::affichageProducteur()
 
 void MainWindow::on_tableWidget_producteur_cellClicked(int row, int column)
 {
+    ui->pushButton_supprimerProducteur->setEnabled(1);
+
     QSqlQuery rechercheAbonnementRequest("SELECT TypeAbonnement.numeroTypeAbonnement "
                                          "FROM TypeAbonnement "
                                          "INNER JOIN Abonnement ON Abonnement.numeroTypeAbonnement = TypeAbonnement.numeroTypeAbonnement "
@@ -90,14 +94,14 @@ void MainWindow::on_tableWidget_producteur_cellClicked(int row, int column)
 void MainWindow::on_pushButton_modifierProducteur_clicked()
 {
     QSqlQuery modifierProducteurRequest("UPDATE producteur SET "
-                                     "nomProducteur='"+ui->lineEdit_nomProducteur->text()+
-                                     "',prenomProducteur='"+ui->lineEdit_prenomProducteur->text()+
-                                     "',loginProducteur='" +ui->lineEdit_loginProducteur->text()+
-                                     "',adresseProducteur='" +ui->lineEdit_adresseProducteur->text()+
-                                     "',villeProducteur='" +ui->lineEdit_villeProducteur->text()+
-                                     "',cpProducteur='" +ui->lineEdit_cpProducteur->text()+
+                                     "nomProducteur='"+ui->lineEdit_nomProducteur->text().replace("'","\'").replace(";","")+
+                                     "',prenomProducteur='"+ui->lineEdit_prenomProducteur->text().replace("'","\'").replace(";","")+
+                                     "',loginProducteur='" +ui->lineEdit_loginProducteur->text().replace("'","\'").replace(";","")+
+                                     "',adresseProducteur='" +ui->lineEdit_adresseProducteur->text().replace("'","\'").replace(";","")+
+                                     "',villeProducteur='" +ui->lineEdit_villeProducteur->text().replace("'","\'").replace(";","")+
+                                     "',cpProducteur='" +ui->lineEdit_cpProducteur->text().replace("'","\'").replace(";","")+
                                      "',numeroAbonnement=" +ui->comboBox_abonnement->currentData().toString()+
-                                     " WHERE numeroProducteur="+ui->tableWidget_producteur->item(ui->tableWidget_producteur->currentRow(),0)->text());
+                                     " WHERE numeroProducteur="+ui->tableWidget_producteur->item(ui->tableWidget_producteur->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
     if(modifierProducteurRequest.numRowsAffected() > 0){
         affichageProducteur();
@@ -114,7 +118,11 @@ void MainWindow::on_pushButton_supprimerProducteur_clicked()
 
     if (laSuppression.exec()==QDialog::Accepted)
     {
-        QSqlQuery supprimerProducteurtRequest("DELETE FROM producteur WHERE numeroProducteur="+ui->tableWidget_producteur->item(ui->tableWidget_producteur->currentRow(),0)->text());
+        QSqlQuery supprimerestUnRequest("DELETE FROM estUn WHERE numeroProducteur="+ui->tableWidget_producteur->item(ui->tableWidget_producteur->currentRow(),0)->text().replace("'","\'").replace(";",""));
+        QSqlQuery supprimerCommandeRequest("DELETE FROM Commande WHERE numeroProducteur="+ui->tableWidget_producteur->item(ui->tableWidget_producteur->currentRow(),0)->text().replace("'","\'").replace(";",""));
+        QSqlQuery supprimerLotDeCommandeRequest("DELETE FROM lotDeCommande WHERE numeroProducteur="+ui->tableWidget_producteur->item(ui->tableWidget_producteur->currentRow(),0)->text().replace("'","\'").replace(";",""));
+        QSqlQuery supprimerProduireRequest("DELETE FROM Produire WHERE numeroProducteur="+ui->tableWidget_producteur->item(ui->tableWidget_producteur->currentRow(),0)->text().replace("'","\'").replace(";",""));
+        QSqlQuery supprimerProducteurtRequest("DELETE FROM producteur WHERE numeroProducteur="+ui->tableWidget_producteur->item(ui->tableWidget_producteur->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
         if(supprimerProducteurtRequest.numRowsAffected() > 0) {
             affichageProducteur();
@@ -128,7 +136,8 @@ void MainWindow::on_pushButton_supprimerProducteur_clicked()
 
 void MainWindow::on_pushButton_accepterProducteur_clicked()
 {
-    QSqlQuery activationProducteurRequest("UPDATE producteur SET activationProducteur=1 WHERE numeroProducteur="+ui->tableWidget_validationProducteur->item(ui->tableWidget_validationProducteur->currentRow(),0)->text());
+    QSqlQuery activationProducteurRequest("UPDATE producteur SET activationProducteur=1 "
+                                          "WHERE numeroProducteur="+ui->tableWidget_validationProducteur->item(ui->tableWidget_validationProducteur->currentRow(),0)->text().replace("'","\'").replace(";",""));
     if(activationProducteurRequest.numRowsAffected() > 0) {
         affichageProducteur();
         ui->statusBar->showMessage("Le producteur a bien été validé");
@@ -140,7 +149,8 @@ void MainWindow::on_pushButton_accepterProducteur_clicked()
 
 void MainWindow::on_pushButton_declinerProducteur_clicked()
 {
-    QSqlQuery declinerProducteurRequest("DELETE FROM Producteur WHERE numeroProducteur="+ui->tableWidget_validationProducteur->item(ui->tableWidget_validationProducteur->currentRow(),0)->text());
+    QSqlQuery declinerProducteurRequest("DELETE FROM Producteur "
+                                        "WHERE numeroProducteur="+ui->tableWidget_validationProducteur->item(ui->tableWidget_validationProducteur->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
     if(declinerProducteurRequest.numRowsAffected() > 0) {
         affichageProducteur();
@@ -148,15 +158,4 @@ void MainWindow::on_pushButton_declinerProducteur_clicked()
     } else{
         ui->statusBar->showMessage("Erreur lors du déclin de la demande de validation du producteur.");
     }
-}
-
-
-QString MainWindow::getMaxProducteur()
-{
-    QSqlQuery maxNumProducteurRequest("SELECT IFNULL((SELECT MAX(numeroProducteur)+1 FROM Producteur),0)");
-    maxNumProducteurRequest.first();
-
-    QString maxNumProducteur = maxNumProducteurRequest.value(0).toString();
-
-    return maxNumProducteur;
 }

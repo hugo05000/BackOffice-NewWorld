@@ -5,6 +5,8 @@
 
 void MainWindow::affichageAbonnement()
 {
+    ui->pushButton_supprimerAbonnement->setDisabled(1);
+
     QStringList tableLabels;
     tableLabels << "Numéro" << "Nom" << "Prix" << "Durée (mois)";
     ui->tableWidget_abonnement->clear();
@@ -46,7 +48,8 @@ void MainWindow::affichageAbonnement()
         nomProducteurAbonnementRequest.first();
 
         ui->tableWidget_historiqueAbonnement->insertRow(cptHistorique);
-        ui->tableWidget_historiqueAbonnement->setItem(cptHistorique,0,new QTableWidgetItem(nomProducteurAbonnementRequest.value("nomProducteur").toString() + " " + nomProducteurAbonnementRequest.value("prenomProducteur").toString()));
+        ui->tableWidget_historiqueAbonnement->setItem(cptHistorique,0,new QTableWidgetItem(nomProducteurAbonnementRequest.value("nomProducteur").toString()
+                                                                                           + " " + nomProducteurAbonnementRequest.value("prenomProducteur").toString()));
         ui->tableWidget_historiqueAbonnement->setItem(cptHistorique,1,new QTableWidgetItem(historiqueAbonnementRequest.value("dateDebutAbonnement").toString()));
         ui->tableWidget_historiqueAbonnement->setItem(cptHistorique,2,new QTableWidgetItem(historiqueAbonnementRequest.value("dateFinAbonnement").toString()));
 
@@ -61,6 +64,8 @@ void MainWindow::affichageAbonnement()
 
 void MainWindow::on_tableWidget_abonnement_cellClicked(int row, int column)
 {
+    ui->pushButton_supprimerAbonnement->setEnabled(1);
+
     ui->lineEdit_nomAbonnement->setText(ui->tableWidget_abonnement->item(row,1)->text());
     ui->lineEdit_prixAbonnement->setText(ui->tableWidget_abonnement->item(row,2)->text());
     ui->lineEdit_dureeAbonnement->setText(ui->tableWidget_abonnement->item(row,3)->text());
@@ -71,9 +76,9 @@ void MainWindow::on_pushButton_ajouterAbonnement_clicked()
 {
     QSqlQuery ajouterAbonnementRequest("INSERT INTO TypeAbonnement VALUES("
                                     +getMaxAbonnement()+",'"
-                                    +ui->lineEdit_nomAbonnement->text()+"',"
-                                    +ui->lineEdit_prixAbonnement->text()+","
-                                    +ui->lineEdit_dureeAbonnement->text()+")");
+                                    +ui->lineEdit_nomAbonnement->text().replace("'","\'").replace(";","")+"',"
+                                    +ui->lineEdit_prixAbonnement->text().replace("'","\'").replace(";","")+","
+                                    +ui->lineEdit_dureeAbonnement->text().replace("'","\'").replace(";","")+")");
 
     if(ajouterAbonnementRequest.numRowsAffected() > 0){
         affichageAbonnement();
@@ -86,9 +91,9 @@ void MainWindow::on_pushButton_ajouterAbonnement_clicked()
 void MainWindow::on_pushButton_modifierAbonnement_clicked()
 {
     QSqlQuery modifierAbonnementRequest("UPDATE TypeAbonnement SET "
-                                     "libelleTypeAbonnement='"+ui->lineEdit_nomAbonnement->text()+
-                                     "',prixTypeAbonnement="+ui->lineEdit_prixAbonnement->text()+
-                                     ",dureeTypeAbonnement=" +ui->lineEdit_dureeAbonnement->text()+
+                                     "libelleTypeAbonnement='"+ui->lineEdit_nomAbonnement->text().replace("'","\'").replace(";","")+
+                                     "',prixTypeAbonnement="+ui->lineEdit_prixAbonnement->text().replace("'","\'").replace(";","")+
+                                     ",dureeTypeAbonnement=" +ui->lineEdit_dureeAbonnement->text().replace("'","\'").replace(";","")+
                                      " WHERE numeroTypeAbonnement="+ui->tableWidget_abonnement->item(ui->tableWidget_abonnement->currentRow(),0)->text());
 
     if(modifierAbonnementRequest.numRowsAffected() > 0){
@@ -107,7 +112,8 @@ void MainWindow::on_pushButton_supprimerAbonnement_clicked()
 
     if (laSuppression.exec()==QDialog::Accepted)
     {
-        QSqlQuery supprimerAbonnementRequest("DELETE FROM TypeAbonnement WHERE numeroTypeAbonnement="+ui->tableWidget_abonnement->item(ui->tableWidget_abonnement->currentRow(),0)->text());
+        QSqlQuery supprimerAbonnementRequest("DELETE FROM TypeAbonnement "
+                                             "WHERE numeroTypeAbonnement="+ui->tableWidget_abonnement->item(ui->tableWidget_abonnement->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
         if(supprimerAbonnementRequest.numRowsAffected() > 0) {
             affichageAbonnement();

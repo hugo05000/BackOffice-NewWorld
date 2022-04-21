@@ -21,7 +21,10 @@ void MainWindow::afficheTableaudebord()
 
 void MainWindow::nouveauxInscrits()
 {
-    QSqlQuery nbrNouveauInscritRequest("SELECT DATE_FORMAT(dateAjoutProducteur,'%M') AS mois,COUNT(numeroProducteur) FROM producteur WHERE YEAR(dateAjoutProducteur)=YEAR(NOW()) GROUP BY mois");
+    QSqlQuery nbrNouveauInscritRequest("SELECT DATE_FORMAT(dateAjoutProducteur,'%M') AS mois,COUNT(numeroProducteur) "
+                                       "FROM producteur "
+                                       "WHERE YEAR(dateAjoutProducteur)=YEAR(NOW()) "
+                                       "GROUP BY mois");
     nbrNouveauInscritRequest.exec();
 
     QBarSet *set0 = new QBarSet("Nouveaux inscrits");
@@ -66,7 +69,10 @@ void MainWindow::nouveauxInscrits()
 
 void MainWindow::nouvellesVarietes()
 {
-    QSqlQuery nouvellesVarietesRequest("SELECT DATE_FORMAT(dateActivationVariete,'%M') AS mois,COUNT(numeroVariete) FROM variete WHERE YEAR(dateActivationVariete)=YEAR(NOW()) GROUP BY mois");
+    QSqlQuery nouvellesVarietesRequest("SELECT DATE_FORMAT(dateActivationVariete,'%M') AS mois,COUNT(numeroVariete) "
+                                       "FROM variete "
+                                       "WHERE YEAR(dateActivationVariete)=YEAR(NOW()) "
+                                       "GROUP BY mois");
     nouvellesVarietesRequest.exec();
 
     QBarSet *set0 = new QBarSet("Nouvelles Variétés");
@@ -111,7 +117,10 @@ void MainWindow::nouvellesVarietes()
 
 void MainWindow::ldpMisEnVente()
 {
-    QSqlQuery lotDeProductionrequest("SELECT DATE_FORMAT(dateDebutSemaine,'%M') AS mois,COUNT(prixUnitaire) FROM Produire WHERE YEAR(dateDebutSemaine)=YEAR(NOW()) GROUP BY mois");
+    QSqlQuery lotDeProductionrequest("SELECT DATE_FORMAT(dateDebutSemaine,'%M') AS mois,COUNT(prixUnitaire) "
+                                     "FROM Produire "
+                                     "WHERE YEAR(dateDebutSemaine)=YEAR(NOW()) "
+                                     "GROUP BY mois");
     lotDeProductionrequest.exec();
 
     QBarSet *set0 = new QBarSet("Lots de productions mis en vente");

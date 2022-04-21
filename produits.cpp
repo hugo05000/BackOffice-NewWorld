@@ -7,6 +7,8 @@
 
 void MainWindow::affichageProduits()
 {
+    ui->pushButton_supprimer->setDisabled(1);
+
     //On initialise le tableau
     QStringList tableLabels;
     tableLabels << "Numéro" << "Nom" << "Informations" << "Image" << "Quantité" << "Variété" << "Image";
@@ -66,27 +68,37 @@ void MainWindow::affichageProduits()
     int cptActivation=0;
     while(produitAttenteRequest.next())
     {
-        QLabel* sonImage = new QLabel();
-        sonImage->setPixmap(QPixmap(produitAttenteRequest.value("imageProduit").toString()));
-        sonImage->setScaledContents(true);
-        sonImage->setStyleSheet("max-height:150px;");
+        //On vérifie si le produit n'a été refusé
+        QSqlQuery refusProduitRequest("SELECT numRefusProduit FROM refusProduit WHERE numRefusProduit="+produitAttenteRequest.value("numeroProduit").toString());
+        refusProduitRequest.first();
 
-        ui->tableWidget_validationProduit->insertRow(cptActivation);
-        ui->tableWidget_validationProduit->setItem(cptActivation,0,new QTableWidgetItem(produitAttenteRequest.value("numeroProduit").toString()));
-        ui->tableWidget_validationProduit->setItem(cptActivation,1,new QTableWidgetItem(produitAttenteRequest.value("nomProduit").toString()));
-        ui->tableWidget_validationProduit->setItem(cptActivation,2,new QTableWidgetItem(produitAttenteRequest.value("informationProduit").toString()));
-        ui->tableWidget_validationProduit->setCellWidget(cptActivation,3,sonImage);
-        ui->tableWidget_validationProduit->setItem(cptActivation,4,new QTableWidgetItem(produitAttenteRequest.value("quantiteProduit").toString()));
-        ui->tableWidget_validationProduit->setItem(cptActivation,5,new QTableWidgetItem(produitAttenteRequest.value("numeroVariete").toString()));
-        ui->tableWidget_validationProduit->setColumnHidden(0,true);
-        ui->tableWidget_validationProduit->setColumnHidden(5,true);
-        cptActivation++;
+        //On affiche seulement le produit s'il n'est pas refusé
+        if(refusProduitRequest.size() == 0)
+        {
+            QLabel* sonImage = new QLabel();
+            sonImage->setPixmap(QPixmap(produitAttenteRequest.value("imageProduit").toString()));
+            sonImage->setScaledContents(true);
+            sonImage->setStyleSheet("max-height:150px;");
+
+            ui->tableWidget_validationProduit->insertRow(cptActivation);
+            ui->tableWidget_validationProduit->setItem(cptActivation,0,new QTableWidgetItem(produitAttenteRequest.value("numeroProduit").toString()));
+            ui->tableWidget_validationProduit->setItem(cptActivation,1,new QTableWidgetItem(produitAttenteRequest.value("nomProduit").toString()));
+            ui->tableWidget_validationProduit->setItem(cptActivation,2,new QTableWidgetItem(produitAttenteRequest.value("informationProduit").toString()));
+            ui->tableWidget_validationProduit->setCellWidget(cptActivation,3,sonImage);
+            ui->tableWidget_validationProduit->setItem(cptActivation,4,new QTableWidgetItem(produitAttenteRequest.value("quantiteProduit").toString()));
+            ui->tableWidget_validationProduit->setItem(cptActivation,5,new QTableWidgetItem(produitAttenteRequest.value("numeroVariete").toString()));
+            ui->tableWidget_validationProduit->setColumnHidden(0,true);
+            ui->tableWidget_validationProduit->setColumnHidden(5,true);
+            cptActivation++;
+        }
     }
 }
 
 
 void MainWindow::on_tableWidget_produits_cellClicked(int row, int column)
 {
+    ui->pushButton_supprimer->setEnabled(1);
+
     ui->lineEdit_nomProduit->setText(ui->tableWidget_produits->item(row,1)->text());
     ui->lineEdit_informations->setText(ui->tableWidget_produits->item(row,2)->text());
     ui->lineEdit_quantitee->setText(ui->tableWidget_produits->item(row,4)->text());
@@ -99,10 +111,10 @@ void MainWindow::on_pushButton_ajouter_clicked()
 {
     QSqlQuery ajouterProduitRequest("INSERT INTO produit VALUES("
                                     +getMaxProduit()+",'"
-                                    +ui->lineEdit_nomProduit->text()+"','"
-                                    +ui->lineEdit_informations->text()+"','"
-                                    +ui->lineEdit_image->text()+"',"
-                                    +ui->lineEdit_quantitee->text()+","
+                                    +ui->lineEdit_nomProduit->text().replace("'","\'").replace(";","")+"','"
+                                    +ui->lineEdit_informations->text().replace("'","\'").replace(";","")+"','"
+                                    +ui->lineEdit_image->text().replace("'","\'").replace(";","")+"',"
+                                    +ui->lineEdit_quantitee->text().replace("'","\'").replace(";","")+","
                                     +ui->comboBox_variete->currentData().toString()+")");
 
     if(ajouterProduitRequest.numRowsAffected() > 0){
@@ -117,12 +129,12 @@ void MainWindow::on_pushButton_ajouter_clicked()
 void MainWindow::on_pushButton_modifier_clicked()
 {
     QSqlQuery modifierProduitRequest("UPDATE produit SET "
-                                     "nomProduit='"+ui->lineEdit_nomProduit->text()+
-                                     "',informationProduit='"+ui->lineEdit_informations->text()+
-                                     "',imageProduit='" +ui->lineEdit_image->text()+
+                                     "nomProduit='"+ui->lineEdit_nomProduit->text().replace("'","\'").replace(";","")+
+                                     "',informationProduit='"+ui->lineEdit_informations->text().replace("'","\'").replace(";","")+
+                                     "',imageProduit='" +ui->lineEdit_image->text().replace("'","\'").replace(";","")+
                                      "',quantiteProduit="+ui->lineEdit_quantitee->text()+
-                                     ",numeroVariete=" +ui->comboBox_variete->currentData().toString()+
-                                     " WHERE numeroProduit="+ui->tableWidget_produits->item(ui->tableWidget_produits->currentRow(),0)->text());
+                                     ",numeroVariete=" +ui->comboBox_variete->currentData().toString().replace("'","\'").replace(";","")+
+                                     " WHERE numeroProduit="+ui->tableWidget_produits->item(ui->tableWidget_produits->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
     if(modifierProduitRequest.numRowsAffected() > 0){
         affichageProduits();
@@ -139,7 +151,8 @@ void MainWindow::on_pushButton_supprimer_clicked()
 
     if (laSuppression.exec()==QDialog::Accepted)
     {
-        QSqlQuery supprimerProduitRequest("DELETE FROM produit WHERE numeroProduit="+ui->tableWidget_produits->item(ui->tableWidget_produits->currentRow(),0)->text());
+        QSqlQuery supprimerProduitRequest("DELETE FROM produit "
+                                          "WHERE numeroProduit="+ui->tableWidget_produits->item(ui->tableWidget_produits->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
         if(supprimerProduitRequest.numRowsAffected() > 0) {
             affichageProduits();
@@ -161,7 +174,8 @@ void MainWindow::on_pushButton_image_clicked()
 
 void MainWindow::on_pushButton_accepterProduit_clicked()
 {
-    QSqlQuery activationProduitRequest("UPDATE produit SET activationProduit=1 WHERE numeroProduit="+ui->tableWidget_validationProduit->item(ui->tableWidget_validationProduit->currentRow(),0)->text());
+    QSqlQuery activationProduitRequest("UPDATE produit SET activationProduit=1 "
+                                       "WHERE numeroProduit="+ui->tableWidget_validationProduit->item(ui->tableWidget_validationProduit->currentRow(),0)->text());
     if(activationProduitRequest.numRowsAffected() > 0) {
         affichageProduits();
         ui->statusBar->showMessage("Le produit a bien été validé");

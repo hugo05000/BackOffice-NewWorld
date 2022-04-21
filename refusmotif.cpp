@@ -18,7 +18,8 @@ RefusMotif::~RefusMotif()
 
 void RefusMotif::on_pushButton_valider_clicked()
 {
-    QSqlQuery refusRequest("INSERT INTO refus"+table+" VALUES("+getMaxTable()+",'"+ui->textEdit_motif->toPlainText()+"',NOW(),"+QString::number(numero)+")");
+    QSqlQuery refusRequest("INSERT INTO refus"+table+" "
+                                                     "VALUES("+getMaxTable()+",'"+ui->textEdit_motif->toPlainText().replace("'","\'").replace(";","")+"',NOW(),"+QString::number(numero)+")");
     accept();
 }
 

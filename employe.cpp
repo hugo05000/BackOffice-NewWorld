@@ -7,6 +7,8 @@
 
 void MainWindow::affichageEmploye()
 {
+    ui->pushButton_supprimerEmploye->setDisabled(1);
+
     ui->lineEdit_mdpEmploye->setPlaceholderText("Selement pour ajouter un employé.");
     if(typeEmploye!=1)
     {
@@ -16,6 +18,7 @@ void MainWindow::affichageEmploye()
 
     if(typeEmploye==3)
     {
+        ui->tab_onglets->removeTab(0);
         ui->tab_onglets->removeTab(7);
     }
 
@@ -78,8 +81,11 @@ void MainWindow::affichageEmploye()
     }
 }
 
+
 void MainWindow::on_tableWidget_employe_cellClicked(int row, int column)
 {
+    ui->pushButton_supprimerEmploye->setEnabled(1);
+
     ui->lineEdit_loginEmploye->setText(ui->tableWidget_employe->item(row,1)->text());
     ui->lineEdit_nomEmploye->setText(ui->tableWidget_employe->item(row,2)->text());
     ui->lineEdit_prenomEmploye->setText(ui->tableWidget_employe->item(row,3)->text());
@@ -115,25 +121,25 @@ void MainWindow::on_pushButton_ajouterEmploye_clicked()
         if(typeEmploye==1) {
             ajouterEmployeRequest.exec("INSERT INTO Employe VALUES("
                                             +getMaxEmploye()+",'"
-                                            +ui->lineEdit_loginEmploye->text()+"','"
-                                            +ui->lineEdit_nomEmploye->text()+"','"
-                                            +ui->lineEdit_prenomEmploye->text()+"','"
-                                            +ui->lineEdit_cpEmploye->text()+"','"
-                                            +ui->lineEdit_adresseEmploye->text()+"','"
-                                            +ui->lineEdit_mailEmploye->text()+"','"
-                                            +ui->lineEdit_telephoneEmploye->text()+"','"
+                                            +ui->lineEdit_loginEmploye->text().replace("'","\'").replace(";","")+"','"
+                                            +ui->lineEdit_nomEmploye->text().replace("'","\'").replace(";","")+"','"
+                                            +ui->lineEdit_prenomEmploye->text().replace("'","\'").replace(";","")+"','"
+                                            +ui->lineEdit_cpEmploye->text().replace("'","\'").replace(";","")+"','"
+                                            +ui->lineEdit_adresseEmploye->text().replace("'","\'").replace(";","")+"','"
+                                            +ui->lineEdit_mailEmploye->text().replace("'","\'").replace(";","")+"','"
+                                            +ui->lineEdit_telephoneEmploye->text().replace("'","\'").replace(";","")+"','"
                                             +hash+"',"
                                             +ui->comboBox_typeEmploye->currentData().toString()+")");
         } else if(typeEmploye==2) {
             ajouterEmployeRequest.exec("INSERT INTO Employe VALUES("
                                             +getMaxEmploye()+",'"
-                                            +ui->lineEdit_loginEmploye->text()+"','"
-                                            +ui->lineEdit_nomEmploye->text()+"','"
-                                            +ui->lineEdit_prenomEmploye->text()+"',"
-                                            +ui->lineEdit_cpEmploye->text()+","
-                                            +ui->lineEdit_adresseEmploye->text()+","
-                                            +ui->lineEdit_mailEmploye->text()+","
-                                            +ui->lineEdit_telephoneEmploye->text()+","
+                                            +ui->lineEdit_loginEmploye->text().replace("'","\'").replace(";","")+"','"
+                                            +ui->lineEdit_nomEmploye->text().replace("'","\'").replace(";","")+"','"
+                                            +ui->lineEdit_prenomEmploye->text().replace("'","\'").replace(";","")+"',"
+                                            +ui->lineEdit_cpEmploye->text().replace("'","\'").replace(";","")+","
+                                            +ui->lineEdit_adresseEmploye->text().replace("'","\'").replace(";","")+","
+                                            +ui->lineEdit_mailEmploye->text().replace("'","\'").replace(";","")+","
+                                            +ui->lineEdit_telephoneEmploye->text().replace("'","\'").replace(";","")+","
                                             +hash+","
                                             +"3)");
         }
@@ -156,25 +162,25 @@ void MainWindow::on_pushButton_modifierEmploye_clicked()
 
     if(typeEmploye==1) {
         modifierEmployeRequest.exec("UPDATE Employe SET "
-                                         "loginEmploye='"+ui->lineEdit_loginEmploye->text()+
-                                         "',nomEmploye='"+ui->lineEdit_nomEmploye->text()+
-                                         "',prenomEmploye='" +ui->lineEdit_prenomEmploye->text()+
-                                         "',cp='"+ui->lineEdit_cpEmploye->text()+
-                                         "',adresse='"+ui->lineEdit_adresseEmploye->text()+
-                                         "',mail='"+ui->lineEdit_mailEmploye->text()+
-                                         "',telephone='"+ui->lineEdit_telephoneEmploye->text()+
+                                         "loginEmploye='"+ui->lineEdit_loginEmploye->text().replace("'","\'").replace(";","")+
+                                         "',nomEmploye='"+ui->lineEdit_nomEmploye->text().replace("'","\'").replace(";","")+
+                                         "',prenomEmploye='" +ui->lineEdit_prenomEmploye->text().replace("'","\'").replace(";","")+
+                                         "',cp='"+ui->lineEdit_cpEmploye->text().replace("'","\'").replace(";","")+
+                                         "',adresse='"+ui->lineEdit_adresseEmploye->text().replace("'","\'").replace(";","")+
+                                         "',mail='"+ui->lineEdit_mailEmploye->text().replace("'","\'").replace(";","")+
+                                         "',telephone='"+ui->lineEdit_telephoneEmploye->text().replace("'","\'").replace(";","")+
                                          "',numeroTypeEmploye="+ui->comboBox_typeEmploye->currentData().toString()+
                                          " WHERE numEmploye="+ui->tableWidget_employe->item(ui->tableWidget_employe->currentRow(),0)->text());
     } else if(typeEmploye==2) {
         modifierEmployeRequest.exec("UPDATE Employe SET "
-                                    "loginEmploye='"+ui->lineEdit_loginEmploye->text()+
-                                    "',nomEmploye='"+ui->lineEdit_nomEmploye->text()+
-                                    "',prenomEmploye='" +ui->lineEdit_prenomEmploye->text()+
-                                    "',cp='"+ui->lineEdit_cpEmploye->text()+
-                                    "',adresse='"+ui->lineEdit_adresseEmploye->text()+
-                                    "',mail='"+ui->lineEdit_mailEmploye->text()+
-                                    "',telephone='"+ui->lineEdit_telephoneEmploye->text()+
-                                    " WHERE numEmploye="+ui->tableWidget_employe->item(ui->tableWidget_employe->currentRow(),0)->text());
+                                    "loginEmploye='"+ui->lineEdit_loginEmploye->text().replace("'","\'").replace(";","")+
+                                    "',nomEmploye='"+ui->lineEdit_nomEmploye->text().replace("'","\'").replace(";","")+
+                                    "',prenomEmploye='" +ui->lineEdit_prenomEmploye->text().replace("'","\'").replace(";","")+
+                                    "',cp='"+ui->lineEdit_cpEmploye->text().replace("'","\'").replace(";","")+
+                                    "',adresse='"+ui->lineEdit_adresseEmploye->text().replace("'","\'").replace(";","")+
+                                    "',mail='"+ui->lineEdit_mailEmploye->text().replace("'","\'").replace(";","")+
+                                    "',telephone='"+ui->lineEdit_telephoneEmploye->text().replace("'","\'").replace(";","")+
+                                    " WHERE numEmploye="+ui->tableWidget_employe->item(ui->tableWidget_employe->currentRow(),0)->text().replace("'","\'").replace(";",""));
     }
 
 
@@ -193,7 +199,8 @@ void MainWindow::on_pushButton_supprimerEmploye_clicked()
 
     if (laSuppression.exec()==QDialog::Accepted)
     {
-        QSqlQuery supprimerEmployeRequest("DELETE FROM Employe WHERE numEmploye="+ui->tableWidget_employe->item(ui->tableWidget_employe->currentRow(),0)->text());
+        QSqlQuery supprimerEmployeRequest("DELETE FROM Employe "
+                                          "WHERE numEmploye="+ui->tableWidget_employe->item(ui->tableWidget_employe->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
         if(supprimerEmployeRequest.numRowsAffected() > 0) {
             affichageEmploye();

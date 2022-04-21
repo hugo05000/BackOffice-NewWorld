@@ -28,10 +28,10 @@ void MainWindow::on_pushButton_modifierInformations_clicked()
 {
     if(ui->lineEdit_confirmationMdp->text().isEmpty()) {
         QSqlQuery modifierInformatinsRequest("UPDATE Employe SET "
-                                         "cp='"+ui->lineEdit_cp->text()+
-                                         "',adresse='"+ui->lineEdit_adresse->text()+
-                                         "',mail='" +ui->lineEdit_mail->text()+
-                                         "',telephone='"+ui->lineEdit_telephone->text()+
+                                         "cp='"+ui->lineEdit_cp->text().replace("'","\'").replace(";","")+
+                                         "',adresse='"+ui->lineEdit_adresse->text().replace("'","\'").replace(";","")+
+                                         "',mail='" +ui->lineEdit_mail->text().replace("'","\'").replace(";","")+
+                                         "',telephone='"+ui->lineEdit_telephone->text().replace("'","\'").replace(";","")+
                                          "' WHERE numEmploye="+numUser);
 
         if(modifierInformatinsRequest.numRowsAffected() > 0) {
@@ -43,12 +43,12 @@ void MainWindow::on_pushButton_modifierInformations_clicked()
     } else {
         if(ui->lineEdit_changemenMdp->text() == ui->lineEdit_confirmationMdp->text()) {
             if(ui->lineEdit_changemenMdp->text().count() > 11) {
-                QString hash = QString(QCryptographicHash::hash((ui->lineEdit_changemenMdp->text()).toUtf8(),QCryptographicHash::Sha256).toHex());
+                QString hash = QString(QCryptographicHash::hash((ui->lineEdit_changemenMdp->text().replace("'","\'").replace(";","")).toUtf8(),QCryptographicHash::Sha256).toHex());
                 QSqlQuery modifierInformatinsMdpRequest("UPDATE Employe SET "
-                                                 "cp='"+ui->lineEdit_cp->text()+
-                                                 "',adresse='"+ui->lineEdit_adresse->text()+
-                                                 "',mail='" +ui->lineEdit_mail->text()+
-                                                 "',telephone='"+ui->lineEdit_telephone->text()+
+                                                 "cp='"+ui->lineEdit_cp->text().replace("'","\'").replace(";","")+
+                                                 "',adresse='"+ui->lineEdit_adresse->text().replace("'","\'").replace(";","")+
+                                                 "',mail='" +ui->lineEdit_mail->text().replace("'","\'").replace(";","")+
+                                                 "',telephone='"+ui->lineEdit_telephone->text().replace("'","\'").replace(";","")+
                                                  "',mdp='"+hash+
                                                  "' WHERE numEmploye="+numUser);
                 if(modifierInformatinsMdpRequest.numRowsAffected() > 0) {

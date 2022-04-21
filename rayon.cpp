@@ -5,6 +5,8 @@
 
 void MainWindow::affichageRayon()
 {
+    ui->pushButton_supprimerRayon->setDisabled(1);
+
     QStringList tableLabels;
     tableLabels << "Numéro" << "Nom";
     ui->tableWidget_rayon->clear();
@@ -30,6 +32,8 @@ void MainWindow::affichageRayon()
 
 void MainWindow::on_tableWidget_rayon_cellClicked(int row, int column)
 {
+    ui->pushButton_supprimerRayon->setEnabled(1);
+
     ui->lineEdit_rayon->setText(ui->tableWidget_rayon->item(row,1)->text());
 }
 
@@ -37,7 +41,7 @@ void MainWindow::on_pushButton_ajouterRayon_clicked()
 {
     QSqlQuery ajouterRayonRequest("INSERT INTO Rayon VALUES("
                                     +getMaxRayon()+",'"
-                                    +ui->lineEdit_rayon->text()+"')");
+                                    +ui->lineEdit_rayon->text().replace("'","\'").replace(";","")+"')");
 
     if(ajouterRayonRequest.numRowsAffected() > 0){
         affichageRayon();
@@ -53,7 +57,7 @@ void MainWindow::on_pushButton_modifierRayon_clicked()
 {
     QSqlQuery modifierRayonRequest("UPDATE Rayon SET "
                                      "nomRayon='"+ui->lineEdit_rayon->text()+
-                                     "' WHERE numeroRayon="+ui->tableWidget_rayon->item(ui->tableWidget_rayon->currentRow(),0)->text());
+                                     "' WHERE numeroRayon="+ui->tableWidget_rayon->item(ui->tableWidget_rayon->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
     if(modifierRayonRequest.numRowsAffected() > 0){
         affichageRayon();
@@ -70,7 +74,17 @@ void MainWindow::on_pushButton_supprimerRayon_clicked()
 
     if (laSuppression.exec()==QDialog::Accepted)
     {
-        QSqlQuery supprimerRayonRequest("DELETE FROM Rayon WHERE numeroRayon="+ui->tableWidget_rayon->item(ui->tableWidget_rayon->currentRow(),0)->text());
+        //On supprime les variétés et les produits associés au rayon
+        QSqlQuery rechercheVarieteRequest("SELECT numeroVariete FROM Variete WHERE numeroRayon="+ui->tableWidget_rayon->item(ui->tableWidget_rayon->currentRow(),0)->text().replace("'","\'").replace(";",""));
+        rechercheVarieteRequest.exec();
+
+        while(rechercheVarieteRequest.next())
+        {
+            QSqlQuery supprimerproduitRequest("DELETE FROM Produit WHERE numeroVariete="+rechercheVarieteRequest.value(0).toString());
+            QSqlQuery supprimerVarieteRequest("DELETE FROM Variete WHERE numeroVariete="+rechercheVarieteRequest.value(0).toString());
+        }
+
+        QSqlQuery supprimerRayonRequest("DELETE FROM Rayon WHERE numeroRayon="+ui->tableWidget_rayon->item(ui->tableWidget_rayon->currentRow(),0)->text().replace("'","\'").replace(";",""));
 
         if(supprimerRayonRequest.numRowsAffected() > 0) {
             affichageRayon();
