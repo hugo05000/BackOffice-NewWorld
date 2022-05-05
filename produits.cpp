@@ -128,7 +128,7 @@ void MainWindow::on_pushButton_ajouter_clicked()
                                     +ui->lineEdit_informations->text().replace("'","\'").replace(";","")+"','"
                                     +ui->lineEdit_image->text().replace("'","\'").replace(";","")+"',"
                                     +ui->lineEdit_quantitee->text().replace("'","\'").replace(";","")+","
-                                    +ui->comboBox_variete->currentData().toString()+")");
+                                    +ui->comboBox_variete->currentData().toString()+",1,NOW())");
 
     if(ajouterProduitRequest.numRowsAffected() > 0){
         affichageProduits();
