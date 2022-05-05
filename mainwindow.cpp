@@ -8,6 +8,7 @@
 /**
  * @brief Constructeur de la classe
  * Lance l'ensemble des affichages et récupère le type de l'utilisateur
+ * @param numUtilisateur : numéro de l'utilisateur connecté
  */
 
 MainWindow::MainWindow(QString numUtilisateur, QWidget *parent) :
