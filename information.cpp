@@ -4,6 +4,11 @@
 #include <QSqlQuery>
 #include <QCryptographicHash>
 
+/**
+ * @brief MainWindow::affichageInformations()
+ * Affiche l'ensemble des éléments dans l'onglet "Mes informations".
+ */
+
 void MainWindow::affichageInformations()
 {
     QSqlQuery informationsRequest("SELECT * FROM Employe WHERE numEmploye="+numUser);
@@ -23,6 +28,11 @@ void MainWindow::affichageInformations()
     ui->lineEdit_confirmationMdp->setVisible(0);
     ui->label_confirmationMdp->setVisible(0);
 }
+
+/**
+ * @brief MainWindow::on_pushButton_modifierInformations_clicked()
+ * Modifie les informations de l'employé connecté en base de données.
+ */
 
 void MainWindow::on_pushButton_modifierInformations_clicked()
 {
@@ -66,6 +76,11 @@ void MainWindow::on_pushButton_modifierInformations_clicked()
         }
     }
 }
+
+/**
+ * @brief MainWindow::on_lineEdit_changemenMdp_textEdited()
+ * Active la zone de saisie pour confirmer le mot de passe lorsqu'un mot de passe est saisie dans la zone de saisie correspondante.
+ */
 
 void MainWindow::on_lineEdit_changemenMdp_textEdited(const QString &arg1)
 {

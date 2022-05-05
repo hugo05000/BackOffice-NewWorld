@@ -3,6 +3,11 @@
 #include "confirmersuppression.h"
 #include <QSqlQuery>
 
+/**
+ * @brief MainWindow::affichageRayon()
+ * Affiche l'ensemble des éléments dans l'onglet "Rayons"
+ */
+
 void MainWindow::affichageRayon()
 {
     ui->pushButton_supprimerRayon->setDisabled(1);
@@ -30,12 +35,22 @@ void MainWindow::affichageRayon()
     ui->tableWidget_rayon->setColumnHidden(0,true);
 }
 
+/**
+ * @brief MainWindow::on_tableWidget_rayon_cellClicked()
+ * Récupère les éléments de la ligne sélectionnée dans le tableau des rayons pour compléter les zones de saisies et menus déroulants correspondants.
+ */
+
 void MainWindow::on_tableWidget_rayon_cellClicked(int row, int column)
 {
     ui->pushButton_supprimerRayon->setEnabled(1);
 
     ui->lineEdit_rayon->setText(ui->tableWidget_rayon->item(row,1)->text());
 }
+
+/**
+ * @brief MainWindow::on_pushButton_ajouterRayon_clicked()
+ * Insère le rayon en base de données.
+ */
 
 void MainWindow::on_pushButton_ajouterRayon_clicked()
 {
@@ -53,6 +68,11 @@ void MainWindow::on_pushButton_ajouterRayon_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_modifierRayon_clicked()
+ * Modifie le rayon en base de données.
+ */
+
 void MainWindow::on_pushButton_modifierRayon_clicked()
 {
     QSqlQuery modifierRayonRequest("UPDATE Rayon SET "
@@ -67,6 +87,11 @@ void MainWindow::on_pushButton_modifierRayon_clicked()
         ui->statusBar->showMessage("Erreur lors de la modification du rayon. Veuillez vérifier les informations saisies");
     }
 }
+
+/**
+ * @brief MainWindow::on_pushButton_supprimerRayon_clicked()
+ * Supprime le rayon en base de données.
+ */
 
 void MainWindow::on_pushButton_supprimerRayon_clicked()
 {
@@ -95,6 +120,12 @@ void MainWindow::on_pushButton_supprimerRayon_clicked()
         }
     }
 }
+
+/**
+ * @brief MainWindow::getMaxProduit()
+ * Recherche le plus grand id de la table rayon +1
+ * @return Renvoie l'id le plus grand +1
+ */
 
 QString MainWindow::getMaxRayon()
 {

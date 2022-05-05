@@ -3,6 +3,12 @@
 #include <QApplication>
 #include <QSqlDatabase>
 
+/**
+ * @brief main
+ * Connexion à la base de données
+ * @return Ce que renvoie l'application
+ */
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

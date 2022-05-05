@@ -3,6 +3,11 @@
 
 #include <QMainWindow>
 
+/**
+ * @brief Classe MainWindow
+ * Classe fille de la classe QMainWindow
+ */
+
 namespace Ui {
 class MainWindow;
 }

@@ -3,6 +3,11 @@
 
 #include <QDialog>
 
+/**
+ * @brief Classe ConfirmerSuppression
+ * Classe fille de la classe QDialog
+ */
+
 namespace Ui {
 class ConfirmerSuppression;
 }

@@ -5,6 +5,11 @@
 #include <QSqlQuery>
 #include <QFileDialog>
 
+/**
+ * @brief MainWindow::affichageProduits()
+ * Affiche l'ensemble des éléments dans l'onglet "Produits"
+ */
+
 void MainWindow::affichageProduits()
 {
     ui->pushButton_supprimer->setDisabled(1);
@@ -94,6 +99,10 @@ void MainWindow::affichageProduits()
     }
 }
 
+/**
+ * @brief MainWindow::on_tableWidget_produits_cellClicked()
+ * Récupère les éléments de la ligne sélectionnée dans le tableau des produits pour compléter les zones de saisies et menus déroulants correspondants.
+ */
 
 void MainWindow::on_tableWidget_produits_cellClicked(int row, int column)
 {
@@ -106,6 +115,10 @@ void MainWindow::on_tableWidget_produits_cellClicked(int row, int column)
     ui->comboBox_variete->setCurrentIndex(ui->comboBox_variete->findData(ui->tableWidget_produits->item(row,5)->text().toInt()));
 }
 
+/**
+ * @brief MainWindow::on_pushButton_ajouter_clicked()
+ * Insère le produit en base de données.
+ */
 
 void MainWindow::on_pushButton_ajouter_clicked()
 {
@@ -125,6 +138,10 @@ void MainWindow::on_pushButton_ajouter_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_modifier_clicked()
+ * Modifie le produit en base de données.
+ */
 
 void MainWindow::on_pushButton_modifier_clicked()
 {
@@ -143,6 +160,11 @@ void MainWindow::on_pushButton_modifier_clicked()
         ui->statusBar->showMessage("Erreur lors de la modification du produit. Veuillez vérifier les informations saisies");
     }
 }
+
+/**
+ * @brief MainWindow::on_pushButton_supprimer_clicked()
+ * supprime le produit en base de données.
+ */
 
 
 void MainWindow::on_pushButton_supprimer_clicked()
@@ -163,6 +185,10 @@ void MainWindow::on_pushButton_supprimer_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_supprimer_clicked()
+ * supprime le produit en base de données.
+ */
 
 void MainWindow::on_pushButton_image_clicked()
 {
@@ -171,6 +197,10 @@ void MainWindow::on_pushButton_image_clicked()
     ui->lineEdit_image->setText(image);
 }
 
+/**
+ * @brief MainWindow::on_pushButton_accepterProduit_clicked()
+ * Accepte le produit en base de données.
+ */
 
 void MainWindow::on_pushButton_accepterProduit_clicked()
 {
@@ -184,6 +214,10 @@ void MainWindow::on_pushButton_accepterProduit_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_declinerProduit_clicked()
+ * Refuse le produit en base de données.
+ */
 
 void MainWindow::on_pushButton_declinerProduit_clicked()
 {
@@ -191,6 +225,11 @@ void MainWindow::on_pushButton_declinerProduit_clicked()
     motifRefus.exec();
 }
 
+/**
+ * @brief MainWindow::getMaxProduit()
+ * Recherche le plus grand id de la table produit +1
+ * @return Renvoie l'id le plus grand +1
+ */
 
 QString MainWindow::getMaxProduit()
 {

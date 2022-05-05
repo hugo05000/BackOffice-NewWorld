@@ -5,6 +5,11 @@
 #include <QFileDialog>
 #include <QCryptographicHash>
 
+/**
+ * @brief MainWindow::affichageEmploye()
+ * Affiche l'ensemble des éléments dans l'onglet "Employés"
+ */
+
 void MainWindow::affichageEmploye()
 {
     ui->pushButton_supprimerEmploye->setDisabled(1);
@@ -81,6 +86,10 @@ void MainWindow::affichageEmploye()
     }
 }
 
+/**
+ * @brief MainWindow::on_tableWidget_employe_cellClicked()
+ * Récupère les éléments de la ligne sélectionnée dans le tableau des employés pour compléter les zones de saisies et menus déroulants correspondants.
+ */
 
 void MainWindow::on_tableWidget_employe_cellClicked(int row, int column)
 {
@@ -107,6 +116,10 @@ void MainWindow::on_tableWidget_employe_cellClicked(int row, int column)
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_ajouterEmploye_clicked()
+ * Insère l'employé en base de données
+ */
 
 void MainWindow::on_pushButton_ajouterEmploye_clicked()
 {
@@ -155,6 +168,10 @@ void MainWindow::on_pushButton_ajouterEmploye_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_modifierEmploye_clicked()
+ * Modifie l'employé en base de données
+ */
 
 void MainWindow::on_pushButton_modifierEmploye_clicked()
 {
@@ -192,6 +209,10 @@ void MainWindow::on_pushButton_modifierEmploye_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_supprimerEmploye_clicked()
+ * Supprime l'employé en base de données
+ */
 
 void MainWindow::on_pushButton_supprimerEmploye_clicked()
 {
@@ -211,6 +232,11 @@ void MainWindow::on_pushButton_supprimerEmploye_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::getMaxEmploye()
+ * Recherche le plus grand id de la table employe +1
+ * @return Renvoie l'id le plus grand +1
+ */
 
 QString MainWindow::getMaxEmploye()
 {

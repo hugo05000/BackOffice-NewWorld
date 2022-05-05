@@ -3,6 +3,11 @@
 #include "confirmersuppression.h"
 #include <QSqlQuery>
 
+/**
+ * @brief MainWindow::affichageProducteur()
+ * Affiche l'ensemble des éléments dans l'onglet "Producteurs".
+ */
+
 void MainWindow::affichageProducteur()
 {
     ui->pushButton_supprimerProducteur->setDisabled(1);
@@ -71,6 +76,11 @@ void MainWindow::affichageProducteur()
     }
 }
 
+/**
+ * @brief MainWindow::on_tableWidget_producteur_cellClicked()
+ * Récupère les éléments de la ligne sélectionné dans le tableau des producteurs pour compléter les zones de saisies et menus déroulants correspondants.
+ */
+
 void MainWindow::on_tableWidget_producteur_cellClicked(int row, int column)
 {
     ui->pushButton_supprimerProducteur->setEnabled(1);
@@ -90,6 +100,11 @@ void MainWindow::on_tableWidget_producteur_cellClicked(int row, int column)
     ui->lineEdit_cpProducteur->setText(ui->tableWidget_producteur->item(row,6)->text());
     ui->comboBox_abonnement->setCurrentIndex(rechercheAbonnementRequest.value(0).toInt());
 }
+
+/**
+ * @brief MainWindow::on_pushButton_modifierProducteur_clicked()
+ * Modifie le producteur en base de données.
+ */
 
 void MainWindow::on_pushButton_modifierProducteur_clicked()
 {
@@ -111,6 +126,10 @@ void MainWindow::on_pushButton_modifierProducteur_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_supprimerProducteur_clicked()
+ * Supprime le producteur en base de données.
+ */
 
 void MainWindow::on_pushButton_supprimerProducteur_clicked()
 {
@@ -133,6 +152,10 @@ void MainWindow::on_pushButton_supprimerProducteur_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_accepterProducteur_clicked()
+ * Active le producteur en base de données.
+ */
 
 void MainWindow::on_pushButton_accepterProducteur_clicked()
 {
@@ -146,6 +169,10 @@ void MainWindow::on_pushButton_accepterProducteur_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_supprimerProducteur_clicked()
+ * Refuse la demande du producteur en base de données.
+ */
 
 void MainWindow::on_pushButton_declinerProducteur_clicked()
 {

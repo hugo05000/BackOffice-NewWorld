@@ -3,6 +3,10 @@
 #include <QSqlQuery>
 #include <QDebug>
 
+/**
+ * @brief Connexion::Connexion
+ * Initialise la boîte de dialogue.
+ */
 
 Connexion::Connexion(QWidget *parent) :
     QDialog(parent),
@@ -12,10 +16,20 @@ Connexion::Connexion(QWidget *parent) :
     ui->label_motDePasseIncorrect->setVisible(0);
 }
 
+/**
+ * @brief Destructeur de la classe
+ * Destructeur de la classe Connexion.
+ */
+
 Connexion::~Connexion()
 {
     delete ui;
 }
+
+/**
+ * @brief Connexion::on_pushButton_connexion_clicked()
+ * Valide ou non la connexion à l'application en recherchant l'utilisateur dans la base de données.
+ */
 
 void Connexion::on_pushButton_connexion_clicked()
 {
@@ -37,6 +51,11 @@ void Connexion::on_pushButton_connexion_clicked()
         ui->label_motDePasseIncorrect->setVisible(1);
     }
 }
+
+/**
+ * @brief Connexion::getIdUtilisateur()
+ * Récupère l'id de l'utilisateur.
+ */
 
 QString Connexion::getIdUtilisateur()
 {

@@ -3,6 +3,11 @@
 #include "confirmersuppression.h"
 #include <QSqlQuery>
 
+/**
+ * @brief MainWindow::affichageAbonnement()
+ * Affiche l'ensemble des éléments dans l'onglet "Abonnement"
+ */
+
 void MainWindow::affichageAbonnement()
 {
     ui->pushButton_supprimerAbonnement->setDisabled(1);
@@ -62,6 +67,11 @@ void MainWindow::affichageAbonnement()
     }
 }
 
+/**
+ * @brief MainWindow::on_tableWidget_abonnement_cellClicked()
+ * Récupère les éléments de la ligne sélectionnée dans le tableau des abonnements pour compléter les zones de saisies et menus déroulants correspondants.
+ */
+
 void MainWindow::on_tableWidget_abonnement_cellClicked(int row, int column)
 {
     ui->pushButton_supprimerAbonnement->setEnabled(1);
@@ -71,6 +81,10 @@ void MainWindow::on_tableWidget_abonnement_cellClicked(int row, int column)
     ui->lineEdit_dureeAbonnement->setText(ui->tableWidget_abonnement->item(row,3)->text());
 }
 
+/**
+ * @brief MainWindow::on_pushButton_ajouterAbonnement_clicked()
+ * Insère l'abonnement en base de données
+ */
 
 void MainWindow::on_pushButton_ajouterAbonnement_clicked()
 {
@@ -87,6 +101,11 @@ void MainWindow::on_pushButton_ajouterAbonnement_clicked()
         ui->statusBar->showMessage("Erreur lors de l'ajout de l'abonnement. Veuillez vérifier les informations saisies");
     }
 }
+
+/**
+ * @brief MainWindow::on_pushButton_modifierAbonnement_clicked()
+ * Modifie l'abonnement en base de données
+ */
 
 void MainWindow::on_pushButton_modifierAbonnement_clicked()
 {
@@ -105,6 +124,10 @@ void MainWindow::on_pushButton_modifierAbonnement_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_supprimerAbonnement_clicked()
+ * Supprime l'abonnement en base de données.
+ */
 
 void MainWindow::on_pushButton_supprimerAbonnement_clicked()
 {
@@ -125,6 +148,11 @@ void MainWindow::on_pushButton_supprimerAbonnement_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::getMaxVariete()
+ * Recherche le plus grand id de la table abonnement +1
+ * @return Renvoie l'id le plus grand +1
+ */
 
 QString MainWindow::getMaxAbonnement()
 {

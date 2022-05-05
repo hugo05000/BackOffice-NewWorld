@@ -3,6 +3,11 @@
 
 #include <QDialog>
 
+/**
+ * @brief Classe Connexion
+ * Classe fille de la classe QDialog
+ */
+
 namespace Ui {
 class Connexion;
 }

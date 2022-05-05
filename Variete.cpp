@@ -4,6 +4,11 @@
 #include <refusmotif.h>
 #include <QSqlQuery>
 
+/**
+ * @brief MainWindow::affichageVarietes()
+ * Affiche l'ensemble des éléments dans l'onglet "Variétés"
+ */
+
 void MainWindow::affichageVarietes()
 {
     ui->pushButton_supprimerVariete->setDisabled(1);
@@ -74,6 +79,11 @@ void MainWindow::affichageVarietes()
     }
 }
 
+/**
+ * @brief MainWindow::on_tableWidget_variete_cellClicked()
+ * Récupère les éléments de la ligne sélectionnée dans le tableau des variétés pour compléter les zones de saisies et menus déroulants correspondants.
+ */
+
 void MainWindow::on_tableWidget_variete_cellClicked(int row, int column)
 {
     ui->pushButton_supprimerVariete->setEnabled(1);
@@ -81,6 +91,11 @@ void MainWindow::on_tableWidget_variete_cellClicked(int row, int column)
     ui->lineEdit_variete->setText(ui->tableWidget_variete->item(row,1)->text());
     ui->comboBox_rayon->setCurrentIndex(ui->comboBox_rayon->findData(ui->tableWidget_variete->item(row,2)->text().toInt()));
 }
+
+/**
+ * @brief MainWindow::on_pushButton_ajouterVariete_clicked()
+ * Insère la variété dans la base de données.
+ */
 
 void MainWindow::on_pushButton_ajouterVariete_clicked()
 {
@@ -98,6 +113,10 @@ void MainWindow::on_pushButton_ajouterVariete_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_modifierVariete_clicked()
+ * Modifie la variété dans la base de données.
+ */
 
 void MainWindow::on_pushButton_modifierVariete_clicked()
 {
@@ -115,6 +134,10 @@ void MainWindow::on_pushButton_modifierVariete_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_supprimerVariete_clicked()
+ * Supprime la variété dans la base de données.
+ */
 
 void MainWindow::on_pushButton_supprimerVariete_clicked()
 {
@@ -137,6 +160,10 @@ void MainWindow::on_pushButton_supprimerVariete_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_accepterVariete_clicked()
+ * Accepte la variété dans la base de données.
+ */
 
 void MainWindow::on_pushButton_accepterVariete_clicked()
 {
@@ -152,6 +179,10 @@ void MainWindow::on_pushButton_accepterVariete_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_pushButton_declinerVariete_clicked()
+ * Refuse la variété dans la base de données.
+ */
 
 void MainWindow::on_pushButton_declinerVariete_clicked()
 {
@@ -159,6 +190,11 @@ void MainWindow::on_pushButton_declinerVariete_clicked()
     motifRefus.exec();
 }
 
+/**
+ * @brief MainWindow::getMaxVariete()
+ * Recherche le plus grand id de la table variete +1
+ * @return Renvoie l'id le plus grand +1
+ */
 
 QString MainWindow::getMaxVariete()
 {

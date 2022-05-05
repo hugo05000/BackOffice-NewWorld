@@ -3,6 +3,11 @@
 #include <QSqlQuery>
 #include <QtCharts>
 
+/**
+ * @brief MainWindow::afficheTableaudebord()
+ * Affiche l'ensemble des éléments dans l'onglet "Tableau de bord".
+ */
+
 void MainWindow::afficheTableaudebord()
 {
     nouveauxInscrits();
@@ -18,6 +23,10 @@ void MainWindow::afficheTableaudebord()
     }
 }
 
+/**
+ * @brief MainWindow::nouveauxInscrits()
+ * Affiche les nouveaux inscrits dans le graphique correspondant.
+ */
 
 void MainWindow::nouveauxInscrits()
 {
@@ -66,6 +75,10 @@ void MainWindow::nouveauxInscrits()
      ui->scrollArea_nouveauxInscrits->setWidget(chartView);
 }
 
+/**
+ * @brief MainWindow::nouvellesVarietes()
+ * Affiche les nouvelles variétés dans le graphique correspondant.
+ */
 
 void MainWindow::nouvellesVarietes()
 {
@@ -114,6 +127,10 @@ void MainWindow::nouvellesVarietes()
      ui->scrollArea_nouvellesVarietes->setWidget(chartView);
 }
 
+/**
+ * @brief MainWindow::ldpMisEnVente()
+ * Affiche les nouveaux lots de production dans le graphique correspondant.
+ */
 
 void MainWindow::ldpMisEnVente()
 {
@@ -162,6 +179,10 @@ void MainWindow::ldpMisEnVente()
      ui->scrollArea_ldp->setWidget(chartView);
 }
 
+/**
+ * @brief MainWindow::on_comboBox_rayonTDB_currentTextChanged()
+ * Affiche le nombre de variétés dans le rayon lors du changement d'index du menu déroulant correspondant.
+ */
 
 void MainWindow::on_comboBox_rayonTDB_currentTextChanged(const QString &arg1)
 {

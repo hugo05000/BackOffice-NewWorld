@@ -5,6 +5,11 @@
 #include <QVector>
 #include <QDebug>
 
+/**
+ * @brief Constructeur de la classe
+ * Lance l'ensemble des affichages et récupère le type de l'utilisateur
+ */
+
 MainWindow::MainWindow(QString numUtilisateur, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -30,6 +35,11 @@ MainWindow::MainWindow(QString numUtilisateur, QWidget *parent) :
     affichageEmploye();
     afficheTableaudebord();
 }
+
+/**
+ * @brief Destructeur de la classe
+ * Destructeur de la classe MainWindow
+ */
 
 MainWindow::~MainWindow()
 {

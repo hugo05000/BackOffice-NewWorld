@@ -3,6 +3,11 @@
 
 #include <QDialog>
 
+/**
+ * @brief Classe RefusMotif
+ * Classe fille de la classe QDialog
+ */
+
 namespace Ui {
 class RefusMotif;
 }
